@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { googleOAuthController, loginController, loginOAuthController, signupController, signupOAuthController } from "../controllers/authControllers";
+import { requestPasswordReset, resetPassword } from '../../use-cases/auth/resetPassword';
 
 export const authRouter = Router();
 // auth routes
