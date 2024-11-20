@@ -1,18 +1,14 @@
+import { accountRepo } from "../../@common/constants/objects";
 import { AppError } from "../../domain/errors/AppError";
-import { UserAccountRepositoryImp } from "../../infrastructure/repository/userAccountRepository";
 import { verifyPassword } from "../../libs/bcrypt";
 import { jwtForLogIn } from "../../libs/jwt";
 
-export const logIn = async (logInCredentials: { email: string; password:string|null}) => {
+export const logIn = async (logInCredentials: { email: string; password: string | null }) => {
   const { email, password } = logInCredentials;
-  const { findAccountByEmail } = new UserAccountRepositoryImp(null);
-  // find account using email
-  const account = await findAccountByEmail(email);
-
+  const account = await accountRepo.findByEmail(email);
   if (!account) throw new AppError("No account with this email exist", 404);
-  // compare the passwords provided
   if (password) {
-    await verifyPassword(password, account.password); // this method throw an error if there is a mis-match
+    await verifyPassword(password, account.password);
   }
   return jwtForLogIn(String(account._id));
 };

@@ -1,26 +1,19 @@
 import dotenv from "dotenv"
 dotenv.config();
 import mongoose from "mongoose";
-import { UserAcccount } from "../../domain/auth/userAccount";
+import { Account } from "../../../domain/auth/userAccount";
 import {getName} from "country-list"
 
-// Database structure for documents in UserAccounts Collection
-const userAccountSchema = new mongoose.Schema<UserAcccount>({
+// Database structure for Accounts
+const userAccountSchema = new mongoose.Schema<Account>({
   accountType: {
     type: String,
     enum: { values: ["trader", "investor"], message: `{VALUE} is not a valid value for accountType.Valid values= trader investor` },
     required: [true, "No data passed for accountType"],
   },
-  firstName: {
+  fullName: {
     type: String,
-    required: [true, "No data passed for firtName"],
-    match: [/^[a-zA-Z-]+$/, "firstName value invalid. firstName must be a string and must not contain space"],
-  },
-  lastName: {
-    type: String,
-    minlength: [2, "lastName must be at least 2 characters"],
-    required: [true, "No data passed for lastName"],
-    match: [/^(?!.*[ -]{2})[a-zA-Z]+(?:[ -][a-zA-Z]+)*$/, "lastName value invalid. lastName must be a string and must not cotain leading or trailing spaces"],
+    required: [true, "No data passed for fUllName"],
   },
   email: {
     type: String,
@@ -34,7 +27,7 @@ const userAccountSchema = new mongoose.Schema<UserAcccount>({
   },
   password: {
     type: String,
-    default: "N/A",
+    required: [true, "No data passed for password"],
   },
   username: {
     type: String,
@@ -45,35 +38,18 @@ const userAccountSchema = new mongoose.Schema<UserAcccount>({
     required: [true, "No data passed for dateOfBirth"],
     match: [/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, "dateOfBirth value invalid. dateOfBirth must be in this form yyyy-mm-dd"],
   },
-  gender: {
-    type: String,
-    enum: { values: ["male", "female", "trans"], message: `{VALUE} is not a valid value for gender for this system.Valid values= male female tans` },
-    required: [true, "No data passed for gender"],
-  },
   countryOfOrigin: {
     type: String,
     required: [true, "No data passed for countryOfOrigin"],
     match: [/^[A-Za-z]+$/, "countryOfOrigin value invalid. countryOfOrigin must be a string and must not contain any space"],
     validate: {
-      validator: function (value:string) {
-        return getName(value)!==undefined;
+      validator: function (value: string) {
+        return getName(value) !== undefined;
       },
       message: "Value passed of countryOfOrigin is not a country's ISO code",
     },
   },
-  mediumOfCommu: {
-    type: String,
-    default: "email", // either email or phone
-  },
-  verfCode: {
-    type: Number,
-    default: 0,
-  },
   isAccountVerified: {
-    type: Boolean,
-    default: false,
-  },
-  isIdentityVerified: {
     type: Boolean,
     default: false,
   },
@@ -83,4 +59,4 @@ const userAccountSchema = new mongoose.Schema<UserAcccount>({
   },
 });
 
-export const UserAccountSchema = mongoose.model("UserAcccount", userAccountSchema);
+export const AccountDb = mongoose.model("Accounts", userAccountSchema);
