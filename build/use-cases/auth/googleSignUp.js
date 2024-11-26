@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.googleSignUp = exports.getUserAccountFromGoogle = exports.getAccessToken = void 0;
 const axios_1 = __importDefault(require("axios"));
 const AppError_1 = require("../../domain/errors/AppError");
-const authControllers_1 = require("../../interface/controllers/authControllers");
+const authControllers_1 = require("../../interface/auth/authControllers");
 const getAccessToken = (authCode) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { tokens } = yield authControllers_1.oauth2Client.getToken(authCode);
@@ -47,6 +47,14 @@ const googleSignUp = (authCode) => __awaiter(void 0, void 0, void 0, function* (
     const dateOfBirth = birthdays
         ? `${birthdays[0].date.year}-${birthdays[0].date.month.length === 1 ? `0${birthdays[0].date.month}` : birthdays[0].date.month}-${birthdays[0].date.day.length === 1 ? `0${birthdays[0].date.day}` : birthdays[0].date.day}`
         : null;
-    return { firstName: (names) ? names[0].givenName : null, lastName: (names) ? names[0].familyName : null, email: (emailAddresses) ? emailAddresses[0].value : null, profile: (photos) ? photos[0].url : null, phone: (phoneNumbers) ? phoneNumbers[0].value : null, gender: (genders) ? genders[0].value : null, dateOfBirth };
+    return {
+        firstName: names ? names[0].givenName : null,
+        lastName: names ? names[0].familyName : null,
+        email: emailAddresses ? emailAddresses[0].value : null,
+        profile: photos ? photos[0].url : null,
+        phone: phoneNumbers ? phoneNumbers[0].value : null,
+        gender: genders ? genders[0].value : null,
+        dateOfBirth,
+    };
 });
 exports.googleSignUp = googleSignUp;

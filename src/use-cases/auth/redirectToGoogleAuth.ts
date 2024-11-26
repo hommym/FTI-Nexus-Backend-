@@ -1,9 +1,9 @@
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 import { Response } from "express";
-import { oauth2Client } from "../../interface/controllers/authControllers";
+import { oauth2Client } from "../../interface/auth/authControllers";
 
-export const redirectToGoogleAuth =  (res:Response,authType:"login"|"signup"="signup") => {
+export const redirectToGoogleAuth = (res: Response, authType: "login" | "signup" = "signup") => {
   const scope =
     authType === "signup"
       ? ["profile", "email", "https://www.googleapis.com/auth/user.birthday.read", "https://www.googleapis.com/auth/user.gender.read", "https://www.googleapis.com/auth/user.phonenumbers.read"]

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRouter = void 0;
 const express_1 = require("express");
-const authControllers_1 = require("../controllers/authControllers");
+const authControllers_1 = require("./authControllers");
 exports.authRouter = (0, express_1.Router)();
 // auth routes
 /**

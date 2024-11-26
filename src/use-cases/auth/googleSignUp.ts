@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AppError } from "../../domain/errors/AppError";
-import { oauth2Client } from "../../interface/controllers/authControllers";
+import { oauth2Client } from "../../interface/auth/authControllers";
 
 export const getAccessToken = async (authCode: string) => {
   try {
@@ -12,7 +12,7 @@ export const getAccessToken = async (authCode: string) => {
   }
 };
 
-export const getUserAccountFromGoogle = async (accessToken: string,url:string|null=null) => {
+export const getUserAccountFromGoogle = async (accessToken: string, url: string | null = null) => {
   console.log("Getting user accountInfo");
   const accountInfo = await axios({
     method: "get",
@@ -35,5 +35,13 @@ export const googleSignUp = async (authCode: string) => {
         (birthdays[0].date.day as string).length === 1 ? `0${birthdays[0].date.day}` : birthdays[0].date.day
       }`
     : null;
-  return { firstName:(names)? names[0].givenName:null, lastName: (names)?names[0].familyName:null, email:(emailAddresses)? emailAddresses[0].value:null, profile:(photos)? photos[0].url:null, phone:(phoneNumbers)? phoneNumbers[0].value:null, gender:(genders)? genders[0].value:null, dateOfBirth };
+  return {
+    firstName: names ? names[0].givenName : null,
+    lastName: names ? names[0].familyName : null,
+    email: emailAddresses ? emailAddresses[0].value : null,
+    profile: photos ? photos[0].url : null,
+    phone: phoneNumbers ? phoneNumbers[0].value : null,
+    gender: genders ? genders[0].value : null,
+    dateOfBirth,
+  };
 };

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { googleOAuthController, loginController, loginOAuthController, signupController, signupOAuthController } from "../controllers/authControllers";
+import { googleOAuthController, loginController, loginOAuthController, signupController, signupOAuthController } from "./authControllers";
 
 export const authRouter = Router();
 // auth routes
@@ -107,7 +107,6 @@ export const authRouter = Router();
  */
 authRouter.post("/signup", signupController);
 
-
 /**
  * @swagger
  * /api/v1/auth/login:
@@ -183,9 +182,7 @@ authRouter.post("/login", loginController);
 authRouter.get("/signup/:oAuthType", signupOAuthController);
 
 // url for redirecting to third party auth page during login
-authRouter.get("/login/:oAuthType",loginOAuthController)
+authRouter.get("/login/:oAuthType", loginOAuthController);
 
 // callback url for google after recieving consent from the user.
 authRouter.get("/google-signup", googleOAuthController);
-
-

@@ -16,7 +16,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const connectToDatabase_1 = require("./infrastructure/database/connectToDatabase");
-const authRoutes_1 = require("./interface/routes/authRoutes");
+const authRoutes_1 = require("./interface/auth/authRoutes");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swaggerConfig_1 = require("./swaggerConfig");
 const errorHandler_1 = require("./interface/middlewares/errorHandler");
