@@ -16,7 +16,6 @@ export const oauth2Client = new google.auth.OAuth2(process.env.CLIENTID, process
 export const signupController = asyncHandler(async (req: Request, res: Response) => {
   console.log("An account is been created..");
   const accountInfo: Account = req.body;
-  if (!accountInfo.email || !accountInfo.phone) throw new AppError(``,400)
   await signUp(accountInfo);
   console.log("Account creation sucessfull");
   res.status(201).json({ message: "Account created sucessfully" });
@@ -30,7 +29,6 @@ export const signupOAuthController = asyncHandler(async (req: Request, res: Resp
 
 export const loginController = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  if (!email || !password) throw new AppError(!email ? "No data passed for email" : "No data passed for password", 400);
   res.status(200).json({ message: "Login sucessful", token: await logIn({ email, password }) });
 });
 
