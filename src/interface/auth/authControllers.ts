@@ -10,6 +10,7 @@ import { redirectToGoogleAuth } from "../../use-cases/auth/redirectToGoogleAuth"
 import { logIn } from "../../use-cases/auth/login";
 import { googleLogin } from "../../use-cases/auth/googleLogIn";
 import { Account } from "../../domain/auth/userAccount";
+import { checkUsername } from "../../use-cases/auth/checkUsernameValidity";
 
 export const oauth2Client = new google.auth.OAuth2(process.env.CLIENTID, process.env.CLIENTSECRET, `${process.env.BaseUrl}/api/v1/auth/google-signup`);
 
@@ -19,6 +20,11 @@ export const signupController = asyncHandler(async (req: Request, res: Response)
   await signUp(accountInfo);
   console.log("Account creation sucessfull");
   res.status(201).json({ message: "Account created sucessfully" });
+});
+
+export const checkUsernameValidityController = asyncHandler(async (req: Request, res: Response) => {
+  checkUsername(req.params.username);
+  res.status(200).end();
 });
 
 export const signupOAuthController = asyncHandler(async (req: Request, res: Response) => {
