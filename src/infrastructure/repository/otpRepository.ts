@@ -1,6 +1,7 @@
 import { Model } from "mongoose";
 import { DatabaseRepository } from "../../@common/base/databaseRepository";
 import { Otp } from "../../domain/auth/otp";
+import { jwtForOtp } from "../../libs/jwt";
 
 export class OtpRepository extends DatabaseRepository<Otp> {
   protected model: Model<Otp>;
@@ -11,7 +12,7 @@ export class OtpRepository extends DatabaseRepository<Otp> {
 
   async upsert(dataToSave: Otp) {
     const { code, email } = dataToSave;
-    await this.model.updateOne({ email }, { $set: { code } }, { upsert: true });
+    await this.model.updateOne({ email }, { $set: { code:jwtForOtp(code) } }, { upsert: true });
   }
 
   async findByEmail(email: string): Promise<Otp | null> {

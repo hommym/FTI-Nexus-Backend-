@@ -3,14 +3,14 @@ dotenv.config();
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { AppError } from "../../domain/errors/AppError";
-import { signUp } from "../../use-cases/auth/signUp";
-import { googleSignUp } from "../../use-cases/auth/googleSignUp";
+import { signUp } from "../../features/auth/signUp";
+import { googleSignUp } from "../../features/auth/googleSignUp";
 import { google } from "googleapis";
-import { redirectToGoogleAuth } from "../../use-cases/auth/redirectToGoogleAuth";
-import { logIn } from "../../use-cases/auth/login";
-import { googleLogin } from "../../use-cases/auth/googleLogIn";
+import { redirectToGoogleAuth } from "../../features/auth/redirectToGoogleAuth";
+import { logIn } from "../../features/auth/login";
+import { googleLogin } from "../../features/auth/googleLogIn";
 import { Account } from "../../domain/auth/userAccount";
-import { checkUsername } from "../../use-cases/auth/checkUsernameValidity";
+import { checkUsername } from "../../features/auth/checkUsernameValidity";
 
 export const oauth2Client = new google.auth.OAuth2(process.env.CLIENTID, process.env.CLIENTSECRET, `${process.env.BaseUrl}/api/v1/auth/google-signup`);
 

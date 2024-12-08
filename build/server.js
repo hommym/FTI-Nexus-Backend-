@@ -9,6 +9,7 @@ dotenv_1.default.config();
 const connectToDatabase_1 = require("./infrastructure/database/connectToDatabase");
 const authRoutes_1 = require("./interface/auth/authRoutes");
 const errorHandler_1 = require("./interface/middlewares/errorHandler");
+const objects_1 = require("./@common/constants/objects");
 const server = (0, express_1.default)();
 // middlewares
 server.use(express_1.default.json());
@@ -20,6 +21,7 @@ const port = process.env.PORT ? process.env.PORT : 8000;
 const startServer = async () => {
     try {
         await (0, connectToDatabase_1.connectToDatabase)(process.env.MongoDbConnectionUrl);
+        objects_1.appEvent.setUpAllListners();
         server.listen(port, () => {
             console.log(`Server  is listening on ${port} `);
         });

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyToken = exports.jwtForLogIn = void 0;
+exports.jwtForOtp = exports.verifyToken = exports.jwtForLogIn = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const AppError_1 = require("../domain/errors/AppError");
@@ -27,6 +27,16 @@ const verifyToken = (token) => {
     }
 };
 exports.verifyToken = verifyToken;
+const jwtForOtp = (otpCode) => {
+    if (process.env.JwtSecretKey !== undefined) {
+        return jsonwebtoken_1.default.sign({ otpCode }, process.env.JwtSecretKey, { expiresIn: 300000 });
+    }
+    else {
+        console.log("env variable JwtSecretKey not defined on server");
+        throw new AppError_1.AppError("Server errror", 500);
+    }
+};
+exports.jwtForOtp = jwtForOtp;
 // export const jwtForSignUp = (id: string, verfCode: number): string => {
 //   if (process.env.JwtSecretKey !== undefined) {
 //     return jwt.sign({ userId: id, code: verfCode }, process.env.JwtSecretKey, { expiresIn: "1hr" });

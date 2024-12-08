@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      color: #4caf50;
+      font-size: 24px;
+    }
+    .content {
+      line-height: 1.6;
+    }
+    .otp {
+      font-size: 28px;
+      font-weight: bold;
+      color: #4caf50;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Secure Login Verification</h1>
+    </div>
+    <div class="content">
+      <p>Hi <strong>{{username}}</strong>,</p>
+      <p>We received a request to log in to your account. Please use the following OTP to complete the login process:</p>
+      <div class="otp">{{otpCode}}</div>
+      <p>This OTP is valid for the next <strong>{{expiryTime}}</strong> minutes.</p>
+      <p>If you did not initiate this request, please secure your account by changing your password immediately or contacting our support team.</p>
+    </div>
+    <div class="footer">
+      <p>Thank you for choosing [YourAppName].</p>
+      <p>&copy; 2024 {{companyName}}. All Rights Reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
