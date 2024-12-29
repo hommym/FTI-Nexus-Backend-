@@ -10,11 +10,17 @@ const connectToDatabase_1 = require("./infrastructure/database/connectToDatabase
 const authRoutes_1 = require("./interface/auth/authRoutes");
 const errorHandler_1 = require("./interface/middlewares/errorHandler");
 const objects_1 = require("./@common/constants/objects");
+const path_1 = require("path");
 const server = (0, express_1.default)();
 // middlewares
 server.use(express_1.default.json());
 // routes
 server.use("/api/v1/auth", authRoutes_1.authRouter);
+const frontendPath = (0, path_1.join)(__dirname, "..", "/public"); // Replace 'frontend' with your folder name
+server.use(express_1.default.static(frontendPath));
+server.get("*", (req, res) => {
+    res.sendFile((0, path_1.join)(frontendPath, "index.html"));
+});
 // error handling middlware
 server.use(errorHandler_1.errorHandler);
 const port = process.env.PORT ? process.env.PORT : 8000;

@@ -5,6 +5,7 @@ import { connectToDatabase } from "./infrastructure/database/connectToDatabase";
 import { authRouter } from "./interface/auth/authRoutes";
 import { errorHandler } from "./interface/middlewares/errorHandler";
 import { appEvent } from "./@common/constants/objects";
+import { join } from "path";
 
 const server = express();
 
@@ -13,6 +14,15 @@ server.use(express.json());
 
 // routes
 server.use("/api/v1/auth", authRouter);
+
+
+
+const frontendPath = join(__dirname, "..", "/public"); // Replace 'frontend' with your folder name
+server.use(express.static(frontendPath));
+
+server.get("*", (req, res) => {
+  res.sendFile(join(frontendPath, "index.html"));
+});
 
 // error handling middlware
 server.use(errorHandler);
